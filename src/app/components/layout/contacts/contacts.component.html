@@ -1,0 +1,85 @@
+<div class="user-contact-container" [class.dark-theme]="themeService.darkMode()">
+  <div class="contact-hero-section">
+    <span class="badge">Get In Touch</span>
+    <h1>Contact Us</h1>
+    <p>Have a question, feedback, or want to partner with us? We'd love to hear from you.</p>
+  </div>
+
+  <div class="contact-grid">
+    <div class="form-card">
+      <h2>Send us a Message</h2>
+      <p class="form-subtitle">Fill out the form below and we'll get back to you as soon as possible.</p>
+
+      <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
+        <div class="name-email-row">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" [(ngModel)]="formData.name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" [(ngModel)]="formData.email" placeholder="you&#64;example.com" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" name="subject" [(ngModel)]="formData.subject" placeholder="How can we help?" required>
+        </div>
+
+        <div class="form-group">
+          <label>Message</label>
+          <textarea name="message" [(ngModel)]="formData.message" rows="5" placeholder="Your message..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-button" [disabled]="!contactForm.valid">
+          <span class="material-icons">send</span> Send Message
+        </button>
+      </form>
+    </div>
+
+    <div class="info-sidebar">
+      <div class="info-card">
+        <h3>Contact Information</h3>
+        
+        <div class="info-detail">
+          <div class="icon-box"><span class="material-icons">location_on</span></div>
+          <div class="detail-text">
+            <strong>Headquarters</strong>
+            <p>123 Food Court Ave<br>New York, NY 10001</p>
+          </div>
+        </div>
+
+        <div class="info-detail">
+          <div class="icon-box"><span class="material-icons">phone</span></div>
+          <div class="detail-text">
+            <strong>Phone</strong>
+            <p>+1 (555) 123-4567</p>
+          </div>
+        </div>
+
+        <div class="info-detail">
+          <div class="icon-circle"><span class="material-icons">email</span></div>
+          <div class="detail-text">
+            <strong>Email</strong>
+            <p>info&#64;milesnmeals.com</p>
+          </div>
+        </div>
+
+        <div class="info-detail">
+          <div class="icon-box"><span class="material-icons">schedule</span></div>
+          <div class="detail-text">
+            <strong>Office Hours</strong>
+            <p>Mon - Fri: 9:00 AM - 6:00 PM<br>Sat: 10:00 AM - 4:00 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="partnership-card">
+        <h3>Business Inquiries</h3>
+        <p>Interested in becoming a vendor or partnering with us?</p>
+        <p class="partner-email">Email: <span>partners&#64;milesnmeals.com</span></p>
+      </div>
+    </div>
+  </div>
+</div>

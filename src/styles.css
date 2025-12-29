@@ -1,1 +1,111 @@
-/* You can add global styles to this file, and also import other style files */
+/* 1. THEME VARIABLES (The Heart of Dark/Light Mode) */
+:root {
+  /* Light Mode Colors */
+  --bg-color: #faf9f6;
+  --header-bg: #ffffff;
+  --text-main: #333333;
+  --text-headers: #1a1a1a;
+  --border-color: #f0f0f0;
+  --card-bg: #ffffff;
+  --footer-bg: #1a1a1a;
+  --accent-color: #b1611c;
+  --accent-hover: #8e4d16;
+}
+
+[data-theme='dark'] {
+  /* Dark Mode Colors */
+  --bg-color: #121212;
+  --header-bg: #1e1e1e;
+  --text-main: #e0e0e0;
+  --text-headers: #ffffff;
+  --border-color: #333333;
+  --card-bg: #1e1e1e;
+  --footer-bg: #000000;
+}
+
+/* 2. CSS RESET & GLOBAL STABILITY */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-color); /* Now uses variable */
+  color: var(--text-main);           /* Now uses variable */
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 3. MAIN LAYOUT STABILIZER */
+main {
+  display: block;
+  width: 100%;
+  margin-top: 80px; 
+  min-height: calc(100vh - 80px - 300px);
+}
+
+/* 4. CENTERED CONTAINER */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 5. TYPOGRAPHY STANDARDS */
+h1, h2, h3, h4 {
+  color: var(--text-headers); /* Now uses variable */
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+/* 6. REUSABLE BRAND BUTTONS */
+.btn-brand {
+  background-color: var(--accent-color);
+  color: #ffffff !important;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.3s ease;
+}
+
+.btn-brand:hover {
+  background-color: var(--accent-hover);
+}
+
+/* 7. SCROLLBAR STYLING */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+/* 8. SMOOTH SCROLLING */
+html {
+  scroll-behavior: smooth;
+}

@@ -1,0 +1,137 @@
+/* --- Container & Header Fix --- */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding-top: 140px ensures the card is clearly below your fixed header */
+  padding: 140px 20px 80px; 
+  min-height: 100vh;
+  background-color: #f8f9fa; 
+  transition: background-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* --- Dark Theme Background --- */
+.login-page.dark-theme {
+  background-color: #121212; /* Matches your header and locations bg */
+}
+
+/* --- Login Card --- */
+.login-card {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+/* --- Dark Theme Card Overrides --- */
+.login-page.dark-theme .login-card {
+  background: #1e1e1e; /* Card color from your screenshots */
+  border-color: #333;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h2 { font-size: 24px; margin-bottom: 8px; color: #1a1a1a; }
+.login-page.dark-theme h2 { color: #ffffff; }
+
+p { color: #666; font-size: 14px; }
+.login-page.dark-theme p { color: #aaaaaa; }
+
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+.login-page.dark-theme label { color: #dddddd; }
+
+/* --- Input Styling --- */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper .material-icons {
+  position: absolute;
+  left: 12px;
+  color: #999;
+  font-size: 20px;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.3s;
+  background: white;
+  color: #333;
+}
+
+/* --- Dark Theme Inputs --- */
+.login-page.dark-theme .input-wrapper input {
+  background: #2a2a2a;
+  border-color: #444;
+  color: #ffffff;
+}
+
+.input-wrapper input:focus {
+  border-color: #b1611c;
+}
+
+/* --- Submit Button --- */
+.w-100 {
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;
+  background-color: #b1611c; /* Your theme's primary brown */
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.w-100:hover {
+  background-color: #8e4d16;
+}
+
+/* --- Footer & Redirection Link --- */
+.login-footer {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 13px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 20px;
+}
+
+.login-page.dark-theme .login-footer {
+  border-top-color: #333;
+  color: #888;
+}
+
+.login-footer a { 
+  color: #b1611c; 
+  text-decoration: none; 
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}

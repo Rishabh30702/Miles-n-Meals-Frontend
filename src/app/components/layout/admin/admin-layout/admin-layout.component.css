@@ -1,0 +1,21 @@
+.admin-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; /* Stops the whole page from scrolling */
+  background-color: var(--bg-color);
+}
+
+.main-panel {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto; /* Only the content scrolls, not the sidebar */
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-content {
+  padding: 40px; /* Gives nice breathing room for your cards */
+  max-width: 1400px; /* Optional: keeps content from stretching too wide on huge monitors */
+  width: 100%;
+}
