@@ -1,0 +1,158 @@
+.reports-container {
+  padding: 24px;
+  background-color: #fcfcfc;
+  min-height: 100vh;
+}
+
+/* Header Styling */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.header-text h1 { 
+  font-size: 26px; 
+  font-weight: 700; 
+  color: #111; 
+  margin-bottom: 4px; 
+}
+
+.header-text p { color: #666; font-size: 14px; }
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.filter-select {
+  padding: 10px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  font-size: 14px;
+  color: #444;
+  outline: none;
+  cursor: pointer;
+}
+
+.btn-download {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-download:hover {
+  background-color: #f8f9fa;
+  border-color: #ccc;
+}
+
+/* KPI Cards Styling */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.kpi-card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.kpi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.kpi-card .label { 
+  color: #666; 
+  font-size: 14px; 
+  font-weight: 600; 
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.icon-muted { color: #ccc; font-size: 20px; }
+
+.kpi-card .value { 
+  font-size: 32px; 
+  font-weight: 800; 
+  color: #111;
+  margin-bottom: 12px; 
+}
+
+.comparison { 
+  font-size: 13px; 
+  display: flex; 
+  align-items: center; 
+  gap: 4px; 
+  font-weight: 500;
+}
+
+.comparison.success { color: #2ecc71; }
+.comparison .material-icons { font-size: 16px; }
+
+/* Charts Layout Styling */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr; /* Larger space for bar chart */
+  gap: 24px;
+}
+
+.chart-card {
+  background: white;
+  padding: 28px;
+  border-radius: 16px;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.chart-header h3 { 
+  font-size: 18px; 
+  font-weight: 700; 
+  color: #111; 
+  margin-bottom: 4px; 
+}
+
+.chart-header p { 
+  font-size: 14px; 
+  color: #888; 
+  margin-bottom: 24px; 
+}
+
+.chart-body {
+  height: 320px; /* Fixed height required for Chart.js */
+  position: relative;
+  width: 100%;
+}
+
+.donut-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive Design */
+@media (max-width: 1100px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}

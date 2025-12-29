@@ -1,0 +1,79 @@
+<div class="reports-container">
+  <header class="page-header">
+    <div class="header-text">
+      <h1>Reports</h1>
+      <p>Financial analytics and insights</p>
+    </div>
+    <div class="header-actions">
+      <select class="filter-select">
+        <option>Last 30 Days</option>
+        <option>Last 3 Months</option>
+        <option selected>Last 6 Months</option>
+        <option>Last Year</option>
+      </select>
+      <button class="btn-download">
+        <span class="material-icons">file_download</span> Download Report
+      </button>
+    </div>
+  </header>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-header">
+        <span class="label">Total Revenue</span>
+        <span class="material-icons icon-muted">attach_money</span>
+      </div>
+      <div class="value">$328,000</div>
+      <div class="comparison success">
+        <span class="material-icons">north_east</span> 
+        <span class="trend-text">+15.2% vs previous period</span>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-header">
+        <span class="label">Total Profit</span>
+        <span class="material-icons icon-muted">trending_up</span>
+      </div>
+      <div class="value">$174,000</div>
+      <div class="comparison success">
+        <span class="material-icons">north_east</span> 
+        <span class="trend-text">+18.5% vs previous period</span>
+      </div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-header">
+        <span class="label">Avg Monthly Revenue</span>
+        <span class="material-icons icon-muted">analytics</span>
+      </div>
+      <div class="value">$54,666.67</div>
+      <div class="comparison success">
+        <span class="material-icons">north_east</span> 
+        <span class="trend-text">+8.3% vs previous period</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3>Monthly Performance</h3>
+        <p>Revenue vs Expenses over time</p>
+      </div>
+      <div class="chart-body">
+        <canvas #performanceCanvas></canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3>Revenue by Location</h3>
+        <p>Distribution across food courts</p>
+      </div>
+      <div class="chart-body donut-container">
+        <canvas #locationCanvas></canvas>
+      </div>
+    </div>
+  </div>
+</div>

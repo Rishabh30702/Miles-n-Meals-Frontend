@@ -1,0 +1,66 @@
+<div class="dashboard-container">
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-header">
+        <span class="label">Today's Revenue</span>
+        <span class="material-icons icon">attach_money</span>
+      </div>
+      <div class="stat-value">$10,150</div>
+      <div class="stat-footer success">
+        <span class="material-icons">trending_up</span>
+        <span>+12.5% from yesterday</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-header">
+        <span class="label">Today's Expenses</span>
+        <span class="material-icons icon">show_chart</span>
+      </div>
+      <div class="stat-value">$4,300</div>
+      <div class="stat-footer danger">
+        <span class="material-icons">trending_down</span>
+        <span>3.2% from yesterday</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-header">
+        <span class="label">Net Profit</span>
+        <span class="material-icons icon">insights</span>
+      </div>
+      <div class="stat-value">$5,850</div>
+      <div class="stat-footer success">
+        <span class="material-icons">trending_up</span>
+        <span>+18.3% from yesterday</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-header">
+        <span class="label">Active Locations</span>
+        <span class="material-icons icon">location_on</span>
+      </div>
+      <div class="stat-value">3/4</div>
+      <div class="stat-footer muted">
+        <span>Currently operating</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-section">
+    <div class="chart-header-content">
+      <h2>Revenue Overview</h2>
+      <p class="subtitle">Daily revenue and expenses for the past week</p>
+    </div>
+    
+    <div class="chart-wrapper">
+      <canvas #revenueCanvas></canvas>
+    </div>
+  </div>
+
+  <footer class="dashboard-footer">
+    <p>You are viewing the accountant dashboard.</p>
+    <p class="footer-hint">Use the sidebar to access Daily Sales Entry, Sales History, and Reports.</p>
+  </footer>
+</div>

@@ -1,0 +1,92 @@
+<div class="sales-entry-container">
+  <header class="page-header">
+    <h1>Daily Sales Entry</h1>
+    <p>Record daily revenue and expenses for a location</p>
+  </header>
+
+  <div class="entry-card">
+    <div class="card-header">
+      <h2>Daily Sales Entry</h2>
+      <p>Record today's revenue and expenses for a location</p>
+    </div>
+
+    <form class="entry-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Location</label>
+          <select class="form-control">
+            <option value="">Select location</option>
+            <option>Downtown Mall</option>
+            <option>South Indian Plaza</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Date</label>
+          <div class="date-input-wrapper">
+            <input 
+              type="date" 
+              class="form-control calendar-input" 
+              [(ngModel)]="selectedDate" 
+              name="entryDate"
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Total Revenue ($)</label>
+        <input type="number" class="form-control" placeholder="0.00">
+      </div>
+
+      <div class="expenses-section">
+        <div class="section-header">
+          <h3>Expenses</h3>
+          <button type="button" class="btn-add-expense">
+            <span class="material-icons">add</span> Add Expense
+          </button>
+        </div>
+
+        <div class="expense-row">
+          <div class="form-group flex-1">
+            <select class="form-control">
+              <option>Category</option>
+              <option>Inventory</option>
+              <option>Utilities</option>
+              <option>Staff</option>
+            </select>
+          </div>
+          <div class="form-group flex-small">
+            <input type="number" class="form-control" placeholder="0.00">
+          </div>
+          <div class="form-group flex-2">
+            <input type="text" class="form-control" placeholder="Description">
+          </div>
+          <button type="button" class="btn-delete">
+            <span class="material-icons">delete_outline</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="summary-box">
+        <div class="summary-item">
+          <span class="summary-label">Revenue</span>
+          <span class="summary-value revenue">$0</span>
+        </div>
+        <div class="summary-item border-x">
+          <span class="summary-label">Expenses</span>
+          <span class="summary-value expenses">$0</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Net Profit</span>
+          <span class="summary-value profit">$0</span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary">Save Draft</button>
+        <button type="submit" class="btn-primary">Submit Entry</button>
+      </div>
+    </form>
+  </div>
+</div>

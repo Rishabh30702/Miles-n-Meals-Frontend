@@ -1,0 +1,23 @@
+<header class="main-header">
+  <div class="logo-section" routerLink="/">
+    <img src="logo.jpg" alt="Miles n' Meals Logo">
+  </div>
+
+  <nav class="nav-links">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+    <a routerLink="/about" routerLinkActive="active">About</a>
+    <a routerLink="/locations" routerLinkActive="active">Our Locations</a>
+    <a routerLink="/contacts" routerLinkActive="active">Contacts</a>
+  </nav>
+
+  <div class="header-actions">
+    <span class="material-icons theme-icon" (click)="toggleTheme()">
+      {{ themeService.darkMode() ? 'light_mode' : 'brightness_3' }}
+    </span>
+    
+    <button class="staff-btn" routerLink="/login">
+      <span class="material-icons">login</span>
+      Staff Login
+    </button>
+  </div>
+</header>

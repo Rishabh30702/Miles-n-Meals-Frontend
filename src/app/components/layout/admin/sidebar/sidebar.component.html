@@ -1,0 +1,58 @@
+<aside class="admin-sidebar" [class.collapsed]="isCollapsed">
+  <div class="sidebar-top">
+    <div class="toggle-header">
+      <button class="icon-btn toggle-btn" (click)="toggleSidebar()">
+        <span class="material-icons">{{ isCollapsed ? 'menu' : 'menu_open' }}</span>
+      </button>
+    </div>
+
+    <div class="nav-group">
+      <p class="nav-label" *ngIf="!isCollapsed">Navigation</p>
+      <nav class="side-nav">
+        
+        <a routerLink="/admin/dashboard" routerLinkActive="active" title="Dashboard">
+          <span class="material-icons">dashboard</span>
+          <span class="nav-text" *ngIf="!isCollapsed">Dashboard</span>
+        </a>
+
+        <a routerLink="/admin/daily-sales" routerLinkActive="active" title="Daily Sales">
+          <span class="material-icons">receipt_long</span>
+          <span class="nav-text" *ngIf="!isCollapsed">Daily Sales</span>
+        </a>
+
+        <a routerLink="/admin/sales-history" routerLinkActive="active" title="Sales History">
+          <span class="material-icons">history</span>
+          <span class="nav-text" *ngIf="!isCollapsed">Sales History</span>
+        </a>
+
+        <a routerLink="/admin/reports" routerLinkActive="active" title="Reports">
+          <span class="material-icons">assessment</span>
+          <span class="nav-text" *ngIf="!isCollapsed">Reports</span>
+        </a>
+        
+      </nav>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="user-profile" *ngIf="!isCollapsed">
+      <div class="user-avatar">
+        <span class="material-icons">account_circle</span>
+      </div>
+      <div class="user-info">
+        <span class="username">{{ adminName }}</span>
+        <span class="user-role">{{ adminRole }}</span>
+      </div>
+    </div>
+
+    <div class="footer-actions" [class.vertical]="isCollapsed">
+      <button class="icon-btn" title="Toggle Theme">
+        <span class="material-icons">contrast</span>
+      </button>
+      
+      <button class="icon-btn logout" title="Sign Out" routerLink="/">
+        <span class="material-icons">logout</span>
+      </button>
+    </div>
+  </div>
+</aside>

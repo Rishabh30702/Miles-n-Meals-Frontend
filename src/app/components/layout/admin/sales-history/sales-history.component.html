@@ -1,0 +1,94 @@
+<div class="history-container">
+  <header class="page-header">
+    <div class="header-text">
+      <h1>Sales History</h1>
+      <p>View and manage past sales records</p>
+    </div>
+    <button class="btn-export">
+      <span class="material-icons">download</span> Export CSV
+    </button>
+  </header>
+
+  <div class="filter-bar">
+    <div class="search-input">
+      <span class="material-icons">search</span>
+      <input 
+        type="text" 
+        placeholder="Search records..." 
+        [(ngModel)]="searchText" 
+        (input)="applyFilters()">
+    </div>
+    
+    <select class="filter-select" [(ngModel)]="selectedLocation" (change)="applyFilters()">
+      <option value="">All Locations</option>
+      <option>Downtown Mall</option>
+      <option>Airport Terminal B</option>
+      <option>Central Station</option>
+      <option>Harbor Plaza</option>
+      <option>South Indian Plaza</option>
+    </select>
+
+    <div class="date-range-container">
+      <div class="date-input-box">
+        <span class="material-icons">calendar_today</span>
+        <input type="date" [(ngModel)]="startDate" (change)="applyFilters()">
+      </div>
+      <span class="range-separator">to</span>
+      <div class="date-input-box">
+        <input type="date" [(ngModel)]="endDate" (change)="applyFilters()">
+      </div>
+    </div>
+  </div>
+
+  <div class="summary-grid">
+    <div class="summary-card">
+      <span class="label">Total Revenue</span>
+      <span class="value revenue">$24,500</span>
+    </div>
+    <div class="summary-card">
+      <span class="label">Total Expenses</span>
+      <span class="value expenses">$9,900</span>
+    </div>
+    <div class="summary-card">
+      <span class="label">Net Profit</span>
+      <span class="value profit">$14,600</span>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Location</th>
+          <th>Revenue</th>
+          <th>Expenses</th>
+          <th>Profit</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of filteredRecords">
+          <td>{{ record.date | date:'MMM d, y' }}</td>
+          <td>{{ record.location }}</td>
+          <td>{{ record.revenue | currency }}</td>
+          <td class="text-danger">{{ record.expenses | currency }}</td>
+          <td class="text-success">{{ (record.revenue - record.expenses) | currency }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="record.status.toLowerCase()">
+              {{ record.status }}
+            </span>
+          </td>
+          <td class="actions">
+            <span class="material-icons action-icon" (click)="onViewRecord(record)">visibility</span>
+            <span class="material-icons action-icon" (click)="onEditRecord(record)">edit</span>
+          </td>
+        </tr>
+        <tr *ngIf="filteredRecords.length === 0">
+          <td colspan="7" style="text-align: center; color: #999; padding: 20px;">No records match your search.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

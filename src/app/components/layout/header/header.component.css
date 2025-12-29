@@ -1,0 +1,82 @@
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px; 
+  z-index: 2000; 
+  background-color: var(--header-bg, #ffffff);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  border-bottom: 1px solid var(--border-color, #f0f0f0);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); 
+  box-sizing: border-box; 
+  transition: all 0.3s ease;
+}
+
+.logo-section img {
+  height: 55px;
+  width: auto;
+  display: block;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-main, #555);
+  font-weight: 500;
+  font-size: 15px;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover, 
+.nav-links a.active {
+  color: #b1611c; 
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Style for the clickable half-moon */
+.theme-icon {
+  cursor: pointer;
+  color: var(--text-main, #555);
+  font-size: 24px;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.theme-icon:hover {
+  background-color: rgba(177, 97, 28, 0.1);
+  color: #b1611c;
+}
+
+.staff-btn {
+  background-color: #b1611c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.staff-btn:hover {
+  background-color: #8e4d16;
+}
