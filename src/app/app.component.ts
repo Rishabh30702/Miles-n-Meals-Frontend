@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, Router } from '@angular/router'; // Import Router
-import { CommonModule } from '@angular/common'; // Import CommonModule for *ngIf
+import { RouterOutlet, Router } from '@angular/router'; 
+import { CommonModule } from '@angular/common'; 
 import { HeaderComponent } from './components/layout/header/header.component';
 import { FooterComponent } from './components/layout/footer/footer.component';
 
@@ -14,8 +14,9 @@ import { FooterComponent } from './components/layout/footer/footer.component';
 export class AppComponent {
   constructor(private router: Router) {}
 
-  // This function checks if the current URL starts with '/admin'
-  isAdminRoute(): boolean {
-    return this.router.url.startsWith('/admin');
+  // Returns true if we are on the Admin OR Client pages
+  isDashboardRoute(): boolean {
+    const url = this.router.url;
+    return url.startsWith('/admin') || url.startsWith('/client');
   }
 }

@@ -1,0 +1,409 @@
+<div class="client-container" [class.dark-theme]="themeService.darkMode()">
+  
+  <aside class="sidebar">
+    <div class="logo-section">
+      <span class="material-icons">shopping_basket</span>
+      <h2>Miles<span>n</span>Meals</h2>
+    </div>
+    
+    <nav>
+      <a [class.active]="activeTab === 'dashboard'" (click)="activeTab = 'dashboard'; isAddingEntry = false; isAddingEmployee = false">
+        <span class="material-icons">dashboard</span> 
+        <span>Dashboard</span>
+      </a>
+      <a [class.active]="activeTab === 'employees'" (click)="activeTab = 'employees'; isAddingEmployee = false">
+        <span class="material-icons">groups</span> 
+        <span>Employees</span>
+      </a>
+      <a [class.active]="activeTab === 'support'" (click)="activeTab = 'support'">
+        <span class="material-icons">help_outline</span> 
+        <span>Support</span>
+      </a>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <p class="emp-id">{{ currentUser.id }}</p>
+        <p class="emp-area">{{ currentUser.assignedArea }}</p>
+      </div>
+      <a class="logout">
+        <span class="material-icons">logout</span> 
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    
+    <!-- DASHBOARD TAB -->
+    <div *ngIf="activeTab === 'dashboard'" class="fade-in">
+      <header class="top-header">
+        <div class="title-group">
+          <h1>{{ isAddingEntry ? 'Process Shift Closing' : 'Sales Performance' }}</h1>
+          <p>{{ isAddingEntry ? 'Enter counter details for record maintenance.' : 'Real-time updates for ' + currentUser.assignedArea }}</p>
+        </div>
+        <div class="total-revenue-badge">Area Total: ${{ getTotalRevenue() | number:'1.2-2' }}</div>
+      </header>
+
+      <!-- STATS ROW -->
+      <div class="stats-row" *ngIf="!isAddingEntry">
+        <div class="stat-card" (click)="selectedShift = 'All'" [class.highlight]="selectedShift === 'All'">
+          <span class="material-icons icon-gold">analytics</span>
+          <div class="stat-text">
+            <label>All Entries</label>
+            <h3>{{ filteredSales.length }}</h3>
+          </div>
+        </div>
+        
+        <div class="stat-card" (click)="selectedShift = 'Day'" [class.highlight]="selectedShift === 'Day'">
+          <span class="material-icons" style="color: #f1c40f;">wb_sunny</span>
+          <div class="stat-text">
+            <label>Day Shift</label>
+            <h3>${{ getDayRevenue() | number:'1.0-0' }}</h3>
+          </div>
+        </div>
+        
+        <div class="stat-card" (click)="selectedShift = 'Night'" [class.highlight]="selectedShift === 'Night'">
+          <span class="material-icons icon-blue">nightlight</span>
+          <div class="stat-text">
+            <label>Night Shift</label>
+            <h3>${{ getNightRevenue() | number:'1.0-0' }}</h3>
+          </div>
+        </div>
+        
+        <div class="stat-card add-entry-btn" (click)="isAddingEntry = true">
+          <span class="material-icons">add_circle</span>
+          <div class="stat-text">
+            <label>New Report</label>
+            <h3>Add Entry</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- SALES TABLE -->
+      <div class="table-section" *ngIf="!isAddingEntry">
+        <div class="table-header">
+          <h2>Shift Records - {{ selectedShift }}</h2>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Date/Time</th>
+                <th>Category</th>
+                <th>Shift</th>
+                <th>Revenue</th>
+                <th>Logged By</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of filteredSales" class="fade-in">
+                <td>{{ item.timestamp }}</td>
+                <td>{{ item.category }}</td>
+                <td><span class="shift-tag" [ngClass]="item.shift.toLowerCase()">{{ item.shift }}</span></td>
+                <td><strong>${{ item.revenue | number:'1.2-2' }}</strong></td>
+                <td><code class="emp-code">{{ item.submittedBy }}</code></td>
+                <td><span class="status-tag completed">{{ item.status }}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SHIFT ENTRY FORMS - SINGLE CONTAINER WITH TOGGLE -->
+      <div class="form-container fade-in" *ngIf="isAddingEntry">
+        
+        <!-- TOGGLE BUTTONS IN HEADER -->
+        <div class="form-card-header">
+          <div class="shift-toggle-group">
+            <button type="button" 
+                    [class.active]="selectedShift === 'Day'" 
+                    (click)="selectedShift = 'Day'; toggleShift('Day')">
+              <span class="material-icons">wb_sunny</span> Day Shift
+            </button>
+            <button type="button" 
+                    [class.active]="selectedShift === 'Night'" 
+                    (click)="selectedShift = 'Night'; toggleShift('Night')">
+              <span class="material-icons">nightlight</span> Night Shift
+            </button>
+          </div>
+          <h3>Create Revenue Entry ({{ selectedShift }} Shift)</h3>
+          <p>System Date: {{ today | date:'mediumDate' }}</p>
+        </div>
+
+        <!-- DAY SHIFT FORM - ONLY ONE VISIBLE -->
+        <form *ngIf="selectedShift === 'Day'" 
+              (ngSubmit)="submitDayEntry()" 
+              #dayForm="ngForm" 
+              class="shift-form">
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Opening Sale</label>
+              <input type="number" name="openingSale" [(ngModel)]="dayEntry.openingSale" placeholder="0.00">
+            </div>
+            
+            <div class="form-group">
+              <label>Total Sales ($)</label>
+              <input type="number" name="totalSales" [(ngModel)]="dayEntry.totalSales" (input)="calculateDayDifference()" placeholder="0.00" required>
+            </div>
+            
+            <div class="form-group">
+              <label>Online Sales</label>
+              <input type="number" name="onlineSales" [(ngModel)]="dayEntry.onlineSales" (input)="calculateDayDifference()" placeholder="0.00">
+            </div>
+            
+            <div class="form-group">
+              <label>Expenses</label>
+              <input type="number" name="expenses" [(ngModel)]="dayEntry.expenses" (input)="calculateDayDifference()" placeholder="0.00">
+            </div>
+            
+            <div class="form-group">
+              <label>Category</label>
+              <select name="category" [(ngModel)]="dayEntry.category">
+                <option>NC</option>
+                <option>Barista</option>
+                <option>PS Mart</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>Cancelled Amount</label>
+              <input type="number" name="cancelled" [(ngModel)]="dayEntry.cancelled" (input)="calculateDayDifference()" placeholder="0.00">
+            </div>
+            
+            <div class="form-group">
+              <label>Discount</label>
+              <input type="number" name="discount" [(ngModel)]="dayEntry.discount" (input)="calculateDayDifference()" placeholder="0.00">
+            </div>
+            
+            <div class="form-group">
+              <label>Cash in Counter</label>
+              <input type="number" name="cashInCounter" [(ngModel)]="dayEntry.cashInCounter" (input)="calculateDayDifference()" placeholder="0.00" required>
+            </div>
+            
+            <div class="form-group reconciliation" [ngClass]="dayEntry.cashDifference < 0 ? 'short' : 'excess'">
+              <label>Cash Difference</label>
+              <div class="balance-display">${{ dayEntry.cashDifference | number:'1.2-2' }}</div>
+            </div>
+            
+            <div class="form-group" *ngIf="dayEntry.cashDifference !== 0">
+              <label>Cash Taken By</label>
+              <input type="text" name="cashTakenBy" [(ngModel)]="dayEntry.cashTakenBy" placeholder="Enter staff ID">
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" class="cancel-btn" (click)="isAddingEntry = false; resetDayForm()">Cancel</button>
+            <button type="submit" class="submit-btn" [disabled]="!dayForm.valid">Submit Day Entry</button>
+          </div>
+        </form>
+
+        <!-- NIGHT SHIFT FORM - ONLY ONE VISIBLE -->
+        <form *ngIf="selectedShift === 'Night'" 
+              (ngSubmit)="submitNightEntry()" 
+              #nightForm="ngForm" 
+              class="shift-form">
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Opening Sale</label>
+              <div class="locked-input">0</div>
+            </div>
+            
+            <div class="form-group">
+              <label>Leaving Staff Sale</label>
+              <input type="number" name="leavingStaffSale" [(ngModel)]="nightEntry.leavingStaffSale" (input)="calculateNightDifference()" placeholder="0.00" required>
+            </div>
+            
+            <div class="form-group">
+              <label>Coming Staff Sale</label>
+              <input type="number" name="comingStaffSale" [(ngModel)]="nightEntry.comingStaffSale" (input)="calculateNightDifference()" placeholder="0.00" required>
+            </div>
+            
+            <div class="form-group">
+              <label>Total Sales</label>
+              <div class="locked-input">${{ nightEntry.totalSales | number:'1.2-2' }}</div>
+            </div>
+            
+            <div class="form-group">
+              <label>Online Sales</label>
+              <input type="number" name="onlineSales" [(ngModel)]="nightEntry.onlineSales" (input)="calculateNightDifference()" placeholder="0.00">
+            </div>
+            
+            <div class="form-group">
+              <label>Expenses</label>
+              <input type="number" name="expenses" [(ngModel)]="nightEntry.expenses" (input)="calculateNightDifference()" placeholder="0.00">
+            </div>
+            
+            <div class="form-group">
+              <label>Category</label>
+              <select name="category" [(ngModel)]="nightEntry.category">
+                <option>NC</option>
+                <option>Barista</option>
+                <option>PS Mart</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>Cancelled Amount</label>
+              <input type="number" name="cancelled" [(ngModel)]="nightEntry.cancelled" (input)="calculateNightDifference()" placeholder="0.00">
+            </div>
+            
+            <div class="form-group">
+              <label>Discount</label>
+              <input type="number" name="discount" [(ngModel)]="nightEntry.discount" (input)="calculateNightDifference()" placeholder="0.00">
+            </div>
+            
+            <div class="form-group">
+              <label>Cash in Counter</label>
+              <input type="number" name="cashInCounter" [(ngModel)]="nightEntry.cashInCounter" (input)="calculateNightDifference()" placeholder="0.00" required>
+            </div>
+            
+            <div class="form-group reconciliation" [ngClass]="nightEntry.cashDifference < 0 ? 'short' : 'excess'">
+              <label>Cash Difference</label>
+              <div class="balance-display">${{ nightEntry.cashDifference | number:'1.2-2' }}</div>
+            </div>
+            
+            <div class="form-group" *ngIf="nightEntry.cashDifference !== 0">
+              <label>Cash Taken By</label>
+              <input type="text" name="cashTakenBy" [(ngModel)]="nightEntry.cashTakenBy" placeholder="Enter staff ID">
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" class="cancel-btn" (click)="isAddingEntry = false; resetNightForm()">Cancel</button>
+            <button type="submit" class="submit-btn" [disabled]="!nightForm.valid">Submit Night Entry</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- EMPLOYEES TAB -->
+    <div *ngIf="activeTab === 'employees'" class="fade-in">
+      <header class="top-header">
+        <div class="title-group">
+          <h1>Area Employees</h1>
+          <p>Staff members assigned to {{ currentUser.assignedArea }}</p>
+        </div>
+        <div class="header-right">
+          <div class="search-box">
+            <span class="material-icons">search</span>
+            <input type="text" [(ngModel)]="searchTerm" placeholder="Search name or ID...">
+          </div>
+          <button class="add-new-btn" (click)="isAddingEmployee = true">
+            <span class="material-icons">add</span> Add Employee
+          </button>
+        </div>
+      </header>
+
+      <div class="table-section">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Staff Member</th>
+                <th>Employee ID</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let emp of filteredEmployees">
+                <td>
+                  <div class="user-cell">
+                    <div class="mini-avatar">{{ emp.name[0] }}</div>
+                    <div>
+                      <div class="user-name">{{ emp.name }}</div>
+                      <small>{{ emp.area }}</small>
+                    </div>
+                  </div>
+                </td>
+                <td><code class="emp-code">{{ emp.id }}</code></td>
+                <td><span class="role-badge">{{ emp.role }}</span></td>
+                <td><span class="status-pill" [ngClass]="emp.status.toLowerCase()">{{ emp.status }}</span></td>
+                <td class="text-right">
+                  <button class="icon-delete-btn" (click)="deleteEmployee(emp.id)">
+                    <span class="material-icons">delete_outline</span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUPPORT TAB -->
+    <div *ngIf="activeTab === 'support'" class="fade-in">
+      <header class="top-header">
+        <div class="title-group"><h1>Support Center</h1></div>
+      </header>
+      <div class="support-card">
+        <span class="material-icons support-icon">contact_support</span>
+        <h2>Need Assistance?</h2>
+        <p>Our admin team is available 24/7 for technical issues or entry corrections.</p>
+        <div class="support-actions">
+          <button class="contact-btn email"><span class="material-icons">mail</span> Email Admin</button>
+          <button class="contact-btn chat"><span class="material-icons">chat</span> Live Chat</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ADD EMPLOYEE MODAL -->
+  <div class="modal-overlay-compact" *ngIf="isAddingEmployee" (click)="isAddingEmployee = false">
+    <div class="modal-content-compact" (click)="$event.stopPropagation()">
+      <div class="modal-header-compact">
+        <div class="modal-title-group">
+          <span class="material-icons modal-icon">person_add</span>
+          <h3>Register New Staff</h3>
+        </div>
+        <button class="close-btn-compact" (click)="isAddingEmployee = false">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      
+      <div class="modal-body-compact">
+        <form #employeeForm="ngForm">
+          <div class="form-group-compact">
+            <label>Full Name <span class="required">*</span></label>
+            <input type="text" [(ngModel)]="newEmployee.name" name="empName" placeholder="Enter full name" required>
+          </div>
+          
+          <div class="form-group-compact">
+            <label>Employee ID <span class="required">*</span></label>
+            <input type="text" [(ngModel)]="newEmployee.id" name="empId" placeholder="e.g., EMP101" required>
+          </div>
+          
+          <div class="form-group-compact">
+            <label>Designation</label>
+            <select [(ngModel)]="newEmployee.role" name="empRole">
+              <option value="Counter Head">Counter Head</option>
+              <option value="Sales Lead">Sales Lead</option>
+              <option value="Staff">Staff</option>
+            </select>
+          </div>
+          
+          <div class="form-group-compact">
+            <label>Assigned Area</label>
+            <div class="locked-input-compact">{{ currentUser.assignedArea }}</div>
+          </div>
+        </form>
+      </div>
+      
+      <div class="modal-footer-compact">
+        <button type="button" class="cancel-btn" (click)="isAddingEmployee = false">Cancel</button>
+        <button type="button" class="submit-btn" 
+                [disabled]="!newEmployee.name || !newEmployee.id || !employeeForm.valid"
+                (click)="saveEmployee()">
+          Register Employee
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
